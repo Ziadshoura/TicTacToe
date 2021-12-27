@@ -5,7 +5,7 @@ computerPlaying = ""
 X = [""," "," "," ",
     " "," "," ",
     " "," "," "]
-#Detect if anyone has won yet
+#Detect if anyone has won yet.
 def PlayerWon():
     #Top Row
     if X[1] == X[2] and X[2] == X[3] and X[3] != " ":
