@@ -55,8 +55,8 @@ def playerWon():
 
 #Displays the board
 def printBoard():
-    for i in range(10):
-            print ('\n')
+    # for i in range(10):
+    #         print ('\n')
     print("",board[1],"|",board[2],"|",board[3],
         "\n",board[4],"|",board[5],"|",board[6], 
         "\n",board[7],"|",board[8],"|",board[9])
@@ -67,7 +67,10 @@ def bestMove():
     for i in range(1,10):
         if board[i] == " ":
             board[i] = ai
-            score = minimax(board, 0, False)
+            if (playerWon() == ai):
+                return i
+            score = minimax(board, False)
+            print('position: ', i, 'score: ', score)
             board[i] = " "
             if(score >bestscore):
                 bestscore = score
@@ -75,36 +78,30 @@ def bestMove():
     board[move] = ai
     
 scores = {
-    "X" : 10,
-    "O" : -10,
+    "X" : -1,
+    "O" : 1,
     "tie" : 0
 }
 
-def minimax(board, depth, ismaximizing):
+def minimax(board, aiTurnNext):
     result = playerWon()
+
+    turn = {False: 'X', True: ai}
+
+    #if the game is over, return the score
     if result != None:
         return scores[result]
 
-    if (ismaximizing):
-        bestScore = -1000000
+    totalScore = 0
+    for i in range(1,10):
+        if board[i] == " ":
+            board[i] = turn[aiTurnNext]
+            score = minimax(board, not aiTurnNext)
 
-        for i in range(1,10):
-            if board[i] == " ":
-                board[i] = ai
-                score = minimax(board, depth+1, False)
+            board[i] = " "
+            totalScore += score
 
-                board[i] = " "
-                bestScore = max(score, bestScore)
-    else:
-            bestScore = 1000000
-            for i in range(1,10):
-                if board[i] == " ":
-                    board[i] = player
-                    score = minimax(board, depth +1, True)
-                    board[i] = " "
-                    bestScore = min(score, bestScore)
-
-    return bestScore
+    return totalScore
                 
 
 
@@ -114,7 +111,7 @@ print("Would you like to play against the computer(y/n)")
 computerPlaying = input()
 
 if computerPlaying == "y":
-    while not gameOver:
+    while playerWon() == None:
         printBoard()
 
         print("Its your turn", player, "where would you like to move. ")
@@ -125,7 +122,6 @@ if computerPlaying == "y":
             print("This move is already taken please choose another move")
             continue
         board[Turn] = player
-        print(move)
         if playerWon() == None:
             bestMove() # this plays what the ai's best move is
         else:
