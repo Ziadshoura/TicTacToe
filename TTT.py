@@ -1,11 +1,12 @@
 from tkinter import *
+
 # setup gui
 window = Tk()
 window.title('TicTacToe')#create window and background
 window.configure(background='White')
-window.geometry('550x700')
 
-buttons = []
+
+
 label = Label(window, text= "")
 label.grid(row=4, column=1,)
 
@@ -18,72 +19,140 @@ board = [""," "," "," ",
     " "," "," "]
 gameOver = False
 
-def button1Logic():
-    button_1["state"] = DISABLED
-    button_1['text'] = player
-    board[1] = player
-    againstComputer()
+turn = player
 
 
-def button2Logic():
-    button_2["state"] = DISABLED
-    button_2['text'] = player
-    board[2] = player
-    againstComputer()
-
-def button3Logic():
-    button_3["state"] = DISABLED
-    button_3['text'] = player
-    board[3] = player
-    againstComputer()
-
-def button4Logic():
-    button_4["state"] = DISABLED
-    button_4['text'] = player
-    board[4] = player
-    againstComputer()
-
-def button5Logic():
-    button_5["state"] = DISABLED
-    button_5['text'] = player
-    board[5] = player
-    againstComputer()
-
-def button6Logic():
-    button_6["state"] = DISABLED
-    button_6['text'] = player
-    board[6] = player
-    againstComputer()
-
-def button7Logic():
-    button_7["state"] = DISABLED
-    button_7['text'] = player
-    board[7] = player
-    againstComputer()
-
-def button8Logic():
-    button_8["state"] = DISABLED
-    button_8['text'] = player
-    board[8] = player
-    againstComputer()
-
-def button9Logic():
-    button_9["state"] = DISABLED
-    button_9['text'] = player
-    board[9] = player
-    againstComputer()
+# def button1Logic():
+#     global turn
+#     button_1["state"] = DISABLED
+#     button_1['text'] = turn
+#     board[1] = turn
+#     ##now change the turn and let computer play
+#     turn = ai if turn == player else player
+#     func = dict[againstComputer()]
+#     func()
 
 
+# def button2Logic():
+#     global turn
+#     button_2["state"] = DISABLED
+#     button_2['text'] = turn
+#     board[2] = turn
+#     ##now change the turn and let computer play
+#     turn = ai if turn == player else player
+#     func = dict[againstComputer()]
+#     func()
 
-button_1 = Button (window, text=board[1], padx=40, pady=30, command=button1Logic)
-button_2 = Button (window, text=board[2], padx=40, pady=30, command=button2Logic)
-button_3 = Button (window, text=board[3], padx=40, pady=30, command=button3Logic)
-button_4 = Button (window, text=board[4], padx=40, pady=30, command=button4Logic)
-button_5 = Button (window, text=board[5], padx=40, pady=30, command=button5Logic)
-button_6 = Button (window, text=board[6], padx=40, pady=30, command=button6Logic)
-button_7 = Button (window, text=board[7], padx=40, pady=30, command=button7Logic)
-button_8 = Button (window, text=board[8], padx=40, pady=30, command=button8Logic)
-button_9 = Button (window, text=board[9], padx=40, pady=30, command=button9Logic)
+# def button3Logic():
+#     global turn
+#     button_3["state"] = DISABLED
+#     button_3['text'] = turn
+#     board[3] = turn
+#     ##now change the turn and let computer play
+#     turn = ai if turn == player else player
+#     func = dict[againstComputer()]
+#     func()
+
+# def button4Logic():
+#     global turn
+#     button_4["state"] = DISABLED
+#     button_4['text'] = turn
+#     board[4] = turn
+#     ##now change the turn and let computer play
+#     turn = ai if turn == player else player
+#     func = dict[againstComputer()]
+#     func()
+
+# def button5Logic():
+#     global turn
+#     button_5["state"] = DISABLED
+#     button_5['text'] = turn
+#     board[5] = turn
+#     ##now change the turn and let computer play
+#     turn = ai if turn == player else player
+#     func = dict[againstComputer()]
+#     func()
+
+# def button6Logic():
+#     global turn
+#     button_6["state"] = DISABLED
+#     button_6['text'] = turn
+#     board[6] = turn
+#     ##now change the turn and let computer play
+#     turn = ai if turn == player else player
+#     func = dict[againstComputer()]
+#     func()
+
+# def button7Logic():
+#     global turn
+#     button_7["state"] = DISABLED
+#     button_7['text'] = turn
+#     board[7] = turn
+#     ##now change the turn and let computer play
+#     turn = ai if turn == player else player
+#     func = dict[againstComputer()]
+#     func()
+
+# def button8Logic():
+#     global turn
+#     button_8["state"] = DISABLED
+#     button_8['text'] = turn
+#     board[8] = turn
+#     ##now change the turn and let computer play
+#     turn = ai if turn == player else player
+#     func = dict[againstComputer()]
+#     func()
+
+# def button9Logic():
+#     global turn
+#     button_9["state"] = DISABLED
+#     button_9['text'] = turn
+#     board[9] = turn
+#     ##now change the turn and let computer play
+#     turn = ai if turn == player else player
+#     func = dict[againstComputer()]
+#     func()
+
+
+def buttonPress(id):
+    global turn
+    button = dictButtons[id]
+    button["state"] = DISABLED
+    button['text'] = turn
+    board[id] = turn
+    if turn == player:
+        turn = ai
+        if playerWon() == None:
+            aiTurn = bestMove()
+            buttonPress(aiTurn)
+        elif playerWon() == ai:
+            label.config(text = "The computer has won the Game")
+        elif playerWon() == player:
+            label.config(text = "You have won the Game")
+    else:
+        turn = player
+
+# button_1 = Button (window, text=board[1], padx=40, pady=30, command=button1Logic)
+# button_2 = Button (window, text=board[2], padx=40, pady=30, command=button2Logic)
+# button_3 = Button (window, text=board[3], padx=40, pady=30, command=button3Logic)
+# button_4 = Button (window, text=board[4], padx=40, pady=30, command=button4Logic)
+# button_5 = Button (window, text=board[5], padx=40, pady=30, command=button5Logic)
+# button_6 = Button (window, text=board[6], padx=40, pady=30, command=button6Logic)
+# button_7 = Button (window, text=board[7], padx=40, pady=30, command=button7Logic)
+# button_8 = Button (window, text=board[8], padx=40, pady=30, command=button8Logic)
+# button_9 = Button (window, text=board[9], padx=40, pady=30, command=button9Logic)
+
+button_1 = Button (window, text=board[1], padx=40, pady=30, command=lambda: buttonPress(1))
+button_2 = Button (window, text=board[2], padx=40, pady=30, command=lambda: buttonPress(2))
+button_3 = Button (window, text=board[3], padx=40, pady=30, command=lambda: buttonPress(3))
+button_4 = Button (window, text=board[4], padx=40, pady=30, command=lambda: buttonPress(4))
+button_5 = Button (window, text=board[5], padx=40, pady=30, command=lambda: buttonPress(5))
+button_6 = Button (window, text=board[6], padx=40, pady=30, command=lambda: buttonPress(6))
+button_7 = Button (window, text=board[7], padx=40, pady=30, command=lambda: buttonPress(7))
+button_8 = Button (window, text=board[8], padx=40, pady=30, command=lambda: buttonPress(8))
+button_9 = Button (window, text=board[9], padx=40, pady=30, command=lambda: buttonPress(9))
+
+dictButtons = {1:button_1, 2:button_2, 3:button_3, 4:button_4, 5:button_5, 6:button_6, 7:button_7, 8:button_8, 9:button_9}
 
 
 button_1.grid(row=1, column=0,)
@@ -98,11 +167,13 @@ button_7.grid(row=3, column=0,)
 button_8.grid(row=3, column=1,)
 button_9.grid(row=3, column=2,)
 
+   
+
 def againstComputer():
     if playerWon() == None:
-        bestMove()
         text = "Its your turn", player
         label.config(text = text)
+        return bestMove()
         #check after you played if you have won, lost, or tied
     elif playerWon() == ai:
         label.config(text = "The computer has won the Game")
@@ -113,7 +184,6 @@ def againstComputer():
         label.config(text = "Tie")
     text = "Its your turn", player
     label.config(text = text)
-    return
 
 
 
@@ -178,9 +248,8 @@ def bestMove():
             if(score >bestscore):
                 bestscore = score
                 move = i
-    board[move] = ai
-    buttons[move]['text'] = ai
-    
+    return move
+        
 scores = {
     "X" : -1,
     "O" : 1,
